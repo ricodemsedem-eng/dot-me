@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>.ME. — Your Pocket Mental Wellness Space | VibeCheck</title>
+    <meta name="description" content="Meet .ME. — a friendly, pressure-free mental wellness space with 60-second breathing resets, grounding tools, mood check-ins, and support resources.">
+    <!-- Open Graph / Social Sharing Meta Tags -->
+    <meta property="og:title" content=".ME. — Your Pocket Mental Wellness Space">
+    <meta property="og:description" content="You don't have to carry everything alone. Pause, breathe, and check in with interactive 60-second resets and support resources.">
+    <meta property="og:type" content="website">
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content=".ME. — Your Pocket Mental Wellness Space">
+    <meta name="twitter:description" content="A friendly, pressure-free mental wellness space with 60-second resets, grounding tools, and support directories.">
+    <!-- Inline SVG Favicon: Golden glowing .ME. orb on sage green -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23537365'/%3E%3Ccircle cx='32' cy='32' r='22' fill='%23FDE047' fill-opacity='0.35'/%3E%3Ccircle cx='32' cy='32' r='16' fill='%23FEF08A'/%3E%3Ctext x='32' y='36' font-family='sans-serif' font-weight='800' font-size='11' fill='%231A2228' text-anchor='middle'%3E.ME.%3C/text%3E%3C/svg%3E">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans & Fraunces for warm, modern editorial feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for clean icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tone.js for gentle optional ambient chimes -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Fraunces"', 'serif'],
+                    },
+                    colors: {
+                        cream: '#FAF8F5',
+                        warmwhite: '#FFFFFF',
+                        sage: {
+                            50: '#F2F6F3',
+                            100: '#E1ECE4',
+                            200: '#C5D9CB',
+                            500: '#6B9080',
+                            600: '#537365',
+                            700: '#3D574C',
+                        },
+                        lavender: {
+                            50: '#F5F3FA',
+                            100: '#EAE5F5',
+                            200: '#D5CBEA',
+                            500: '#8E7DBE',
+                            600: '#7260A3',
+                        },
+                        peach: {
+                            50: '#FDF5F2',
+                            100: '#FAE6DF',
+                            500: '#E08E79',
+                        },
+                        slate: {
+                            800: '#263038',
+                            900: '#1A2228',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom animations & smooth transitions */
+        body {
+            background-color: #FAF8F5;
+            color: #263038;
+        }
+
+        /* Breathing Bubble Transition */
+        #breathing-circle {
+            transition: transform 4s cubic-bezier(0.4, 0, 0.2, 1), background-color 2s ease, box-shadow 2s ease;
+        }
+
+        /* 3D Flip Card for Myth vs Fact */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card-inner.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Worry Shredder Animation */
+        @keyframes shredAway {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+                filter: blur(0px);
+            }
+            40% {
+                transform: translateY(25px) scale(0.96);
+                opacity: 0.85;
+                letter-spacing: 2px;
+            }
+            100% {
+                transform: translateY(110px) scale(0.85) rotate(2deg);
+                opacity: 0;
+                filter: blur(6px);
+            }
+        }
+        .shredding {
+            animation: shredAway 1.3s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+            pointer-events: none;
+        }
+
+        /* Cinematic Intro Overlay Transitions */
+        #intro-overlay {
+            transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.9s ease;
+        }
+        #intro-overlay.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Custom subtle scrollbar */
+        ::-webkit-scrollbar {
+<body class="antialiased selection:bg-sage-200 selection:text-slate-900">
+
+    <!-- FULL-SCREEN INTERACTIVE INTRO CINEMATIC OVERLAY -->
+    <div id="intro-overlay" class="fixed inset-0 z-50 w-screen h-screen bg-[#FAF8F5] flex flex-col justify-between select-none overflow-hidden">
+        <!-- 60fps HTML5 Canvas -->
+        <canvas id="intro-canvas" class="absolute inset-0 w-full h-full block"></canvas>
+
+        <!-- Top Cinematic Controls -->
+        <div class="relative z-10 flex items-center justify-between px-5 sm:px-8 pt-5 sm:pt-6">
+            <div class="flex items-center gap-2.5 bg-black/25 backdrop-blur-md border border-white/15 px-3.5 py-1.5 rounded-full text-white text-xs font-medium">
+                <span class="w-2 h-2 rounded-full bg-amber-300 animate-pulse"></span>
+                <span>A Short Story by .ME.</span>
+            </div>
+
+            <div class="flex items-center gap-2.5">
+                <button id="intro-audio-btn" onclick="enableIntroAudio()" class="px-3.5 py-2 rounded-full bg-black/30 hover:bg-black/45 backdrop-blur-md border border-white/20 text-white text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer">
+                    <i id="intro-audio-icon" class="fa-solid fa-volume-xmark"></i>
+                    <span id="intro-audio-label" class="hidden sm:inline">Enable Story Chimes</span>
+                </button>
+                <button onclick="finishIntro(true)" class="px-4 py-2 rounded-full bg-white/90 hover:bg-white text-slate-900 text-xs font-bold shadow-md transition-all flex items-center gap-1.5 cursor-pointer">
+                    <span>Skip Intro</span>
+                    <i class="fa-solid fa-forward-step text-[11px]"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottom Narrative Progress & Subtle Subtitle Bar -->
+        <div class="relative z-10 flex flex-col items-center pb-7 sm:pb-10 px-4 pointer-events-none">
+            <div id="intro-caption-pill" class="px-5 py-2.5 rounded-2xl bg-slate-950/65 backdrop-blur-md border border-white/15 text-white/95 text-xs sm:text-sm font-medium tracking-wide text-center max-w-md shadow-lg transition-all duration-500">
+                Sometimes, carrying everything alone makes the world feel heavy...
+            </div>
+            <!-- Timeline Progress Bar -->
+            <div class="w-48 sm:w-64 h-1 bg-white/20 rounded-full overflow-hidden mt-4">
+                <div id="intro-progress-bar" class="h-full bg-amber-300 rounded-full transition-all duration-75" style="width: 0%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Banner -->
+    <div class="bg-sage-600 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium tracking-wide">
+        <span class="inline-block bg-white/20 rounded-full px-2.5 py-0.5 mr-2 text-[11px] uppercase tracking-wider font-bold">.ME. Space</span>
+        Welcome to .ME. (VibeCheck) — a lighthearted space to pause, breathe, and check in with yourself.
+    </div>
+
+    <!-- Navigation -->
+    <header class="sticky top-0 z-40 bg-cream/85 backdrop-blur-md border-b border-sage-200/60">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2.5 group">
+                <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-amber-300 via-amber-400 to-sage-500 flex items-center justify-center text-slate-900 font-extrabold text-[11px] tracking-tight shadow-sm group-hover:scale-105 transition-transform">
+                    .ME.
+                </div>
+                <div class="flex items-baseline gap-1.5">
+                    <span class="font-serif text-xl font-semibold tracking-tight text-slate-900">.ME.</span>
+                    <span class="hidden sm:inline text-xs font-semibold text-sage-600 bg-sage-100 px-2 py-0.5 rounded-full">VibeCheck</span>
+                </div>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+                <a href="#mood-checkin" class="hover:text-sage-600 transition-colors">Mood Check-In</a>
+                <a href="#quick-resets" class="hover:text-sage-600 transition-colors">Quick Resets</a>
+                <a href="#myth-busters" class="hover:text-sage-600 transition-colors">Myth vs. Fact</a>
+                <a href="#support-directory" class="hover:text-sage-600 transition-colors">Support</a>
+            </nav>
+
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button onclick="replayIntro()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-900 hover:bg-amber-200 transition-colors cursor-pointer" title="Replay the .ME. intro story">
+                    <i class="fa-solid fa-film"></i>
+                    <span class="hidden sm:inline">Replay .ME. Story</span>
+                </button>
+                <button id="sound-toggle" onclick="toggleSound()" class="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-sage-100 text-sage-700 hover:bg-sage-200 transition-colors cursor-pointer" title="Toggle gentle UI chimes">
+                    <i id="sound-icon" class="fa-solid fa-volume-xmark"></i>
+                    <span class="hidden sm:inline" id="sound-label">Chimes Off</span>
+                </button>
+                <a href="#quick-resets" class="px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-all shadow-sm">
+                    Take 60s Break
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-24">
+
+        <!-- 1. HERO SECTION & INTERACTIVE MOOD CHECK-IN -->
+        <section id="mood-checkin" class="relative">
+            <!-- Soft background decorative blobs -->
+            <div class="absolute -top-10 -left-10 w-64 h-64 bg-sage-200/40 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+            <div class="absolute top-20 -right-10 w-72 h-72 bg-lavender-200/40 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-lavender-100 text-lavender-600 text-xs font-semibold mb-4">
+                    <span>✨ Zero pressure, 100% human</span>
+                </div>
+                <h1 class="font-serif text-4xl sm:text-5xl font-semibold text-slate-900 leading-tight mb-4">
+                    How’s your internal weather today?
+                </h1>
+                <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
+                    No heavy diagnostics here—just a quick pulse check. Tap whatever vibe matches right now for a bite-sized reset idea.
+                </p>
+            </div>
+
+            <!-- Interactive Mood Check-In Card -->
+            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-sage-200/70 max-w-4xl mx-auto">
+                <p class="text-xs font-bold uppercase tracking-wider text-slate-400 text-center mb-5">Pick your current vibe</p>
+                
+                <!-- Mood Buttons Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4" id="mood-buttons">
+                    <button onclick="selectMood('chill')" data-mood="chill" class="mood-btn group flex flex-col items-center p-4 rounded-2xl border-2 border-sage-100 bg-sage-50/50 hover:border-sage-500 hover:bg-sage-50 transition-all cursor-pointer">
+                        <span class="text-3xl mb-2 group-hover:scale-110 transition-transform">🌿</span>
+                        <span class="font-semibold text-sm text-slate-800">Chill</span>
+                        <span class="text-[11px] text-slate-500 mt-0.5">Cruising along</span>
+                    </button>
+
+                    <button onclick="selectMood('stressed')" data-mood="stressed" class="mood-btn group flex flex-col items-center p-4 rounded-2xl border-2 border-sage-100 bg-peach-50/40 hover:border-peach-500 hover:bg-peach-50 transition-all cursor-pointer">
+                        <span class="text-3xl mb-2 group-hover:scale-110 transition-transform">😬</span>
+                        <span class="font-semibold text-sm text-slate-800">Stressed</span>
+                        <span class="text-[11px] text-slate-500 mt-0.5">Tabs overloaded</span>
+                    </button>
+
+                    <button onclick="selectMood('overwhelmed')" data-mood="overwhelmed" class="mood-btn group flex flex-col items-center p-4 rounded-2xl border-2 border-sage-100 bg-lavender-50/50 hover:border-lavender-500 hover:bg-lavender-50 transition-all cursor-pointer">
+                        <span class="text-3xl mb-2 group-hover:scale-110 transition-transform">🌀</span>
+                        <span class="font-semibold text-sm text-slate-800">Overwhelmed</span>
+                        <span class="text-[11px] text-slate-500 mt-0.5">Brain buffering</span>
+                    </button>
+
+                    <button onclick="selectMood('energized')" data-mood="energized" class="mood-btn group flex flex-col items-center p-4 rounded-2xl border-2 border-sage-100 bg-amber-50/40 hover:border-amber-400 hover:bg-amber-50 transition-all cursor-pointer">
+                        <span class="text-3xl mb-2 group-hover:scale-110 transition-transform">⚡</span>
+                        <span class="font-semibold text-sm text-slate-800">Energized</span>
+                        <span class="text-[11px] text-slate-500 mt-0.5">Ready to roll</span>
+                    </button>
+
+                    <button onclick="selectMood('low')" data-mood="low" class="col-span-2 sm:col-span-1 mood-btn group flex flex-col items-center p-4 rounded-2xl border-2 border-sage-100 bg-sky-50/40 hover:border-sky-400 hover:bg-sky-50 transition-all cursor-pointer">
+                        <span class="text-3xl mb-2 group-hover:scale-110 transition-transform">☁️</span>
+                        <span class="font-semibold text-sm text-slate-800">Low</span>
+                        <span class="text-[11px] text-slate-500 mt-0.5">Battery at 12%</span>
+                    </button>
+                </div>
+
+                <!-- Dynamic Tailored Output Panel -->
+                <div id="mood-result" class="mt-8 pt-7 border-t border-slate-100 transition-all duration-300">
+                    <div class="bg-sage-50/80 rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                        <div class="space-y-2 max-w-xl">
+                            <div class="flex items-center gap-2">
+                                <span id="result-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-sage-200 text-sage-700">Select a mood above</span>
+                                <span id="result-vibe-tag" class="text-xs text-slate-500 font-medium">✨ Personalized micro-vibe</span>
+                            </div>
+                            <h3 id="result-title" class="font-serif text-xl sm:text-2xl font-semibold text-slate-900">
+                                Tap any emoji to unlock a pocket-sized reset
+                            </h3>
+                            <p id="result-tip" class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                                Whether you need a 2-minute distraction, a permission slip to rest, or a playlist vibe, we’ve got something lighthearted ready.
+                            </p>
+                        </div>
+
+                        <!-- Mini Activity & Soundtrack Pill Box -->
+                        <div class="w-full md:w-72 shrink-0 bg-white rounded-2xl p-4 border border-sage-200/60 shadow-xs space-y-3">
+                            <div>
+                                <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Micro-Action</p>
+                                <p id="result-action" class="text-sm font-semibold text-slate-800 mt-0.5">Drop your shoulders 1 inch</p>
+                            </div>
+                            <div class="pt-2 border-t border-slate-100">
+                                <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Soundtrack Vibe</p>
+                                <p id="result-music" class="text-sm font-medium text-lavender-600 mt-0.5 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-headphones"></i> <span>Lo-Fi Rain & Soft Rhodes</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. INTERACTIVE 'QUICK RESET' MINI-TOOLS -->
+        <section id="quick-resets" class="space-y-8">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-sage-600">Interactive Toolkit</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-slate-900 mt-1">60-Second Quick Resets</h2>
+                </div>
+                <p class="text-sm text-slate-600 max-w-md">
+                    Simple, tactile mini-exercises to give your nervous system a gentle nudge back to center.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- TOOL A: 60-Second Breathing Bubble -->
+                <div class="bg-white rounded-3xl p-6 sm:p-7 border border-sage-200/70 shadow-xs flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="px-2.5 py-1 rounded-full bg-sage-100 text-sage-700 text-xs font-semibold">01 • Breathwork</span>
+                            <span id="breath-timer" class="text-xs font-mono font-bold text-slate-500">01:00</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-semibold text-slate-900">Guided Bubble Breath</h3>
+                        <p class="text-xs text-slate-500 mt-1">Follow the expanding bubble: 4s inhale, 4s hold, 4s exhale.</p>
+                    </div>
+
+                    <!-- Animated Bubble Container -->
+                    <div class="my-8 flex flex-col items-center justify-center relative h-48">
+                        <!-- Outer guide ring -->
+                        <div class="w-40 h-40 rounded-full border-2 border-dashed border-sage-200 flex items-center justify-center relative">
+                            <!-- Expanding Bubble -->
+                            <div id="breathing-circle" class="w-20 h-20 rounded-full bg-gradient-to-tr from-sage-500 to-lavender-500 flex items-center justify-center text-white shadow-md scale-100">
+                                <span id="breath-instruction" class="text-xs font-bold tracking-wide text-center px-2">Ready?</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button id="breath-btn" onclick="toggleBreathing()" class="w-full py-3 px-4 rounded-2xl bg-sage-600 hover:bg-sage-700 text-white text-sm font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer">
+                            <i id="breath-btn-icon" class="fa-solid fa-play"></i>
+                            <span id="breath-btn-text">Start 60s Reset</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TOOL B: 5-4-3-2-1 Grounding Checklist -->
+                <div class="bg-white rounded-3xl p-6 sm:p-7 border border-sage-200/70 shadow-xs flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="px-2.5 py-1 rounded-full bg-lavender-100 text-lavender-600 text-xs font-semibold">02 • Grounding</span>
+                            <span id="grounding-progress" class="text-xs font-bold text-lavender-600">0 / 5 Done</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-semibold text-slate-900">5-4-3-2-1 Senses Check</h3>
+                        <p class="text-xs text-slate-500 mt-1">Look around your room and tap each step as you spot them.</p>
+                    </div>
+
+                    <div class="my-5 space-y-2.5" id="grounding-list">
+                        <button onclick="toggleGroundingStep(this)" class="grounding-item w-full text-left p-3 rounded-2xl border border-slate-100 bg-cream/60 hover:bg-lavender-50/60 transition-all flex items-center gap-3 cursor-pointer">
+                            <span class="w-6 h-6 rounded-full bg-lavender-100 text-lavender-600 font-bold text-xs flex items-center justify-center shrink-0 check-badge">5</span>
+                            <span class="text-xs sm:text-sm text-slate-700 font-medium">Things you can <strong>see</strong> right now</span>
+                        </button>
+
+                        <button onclick="toggleGroundingStep(this)" class="grounding-item w-full text-left p-3 rounded-2xl border border-slate-100 bg-cream/60 hover:bg-lavender-50/60 transition-all flex items-center gap-3 cursor-pointer">
+                            <span class="w-6 h-6 rounded-full bg-lavender-100 text-lavender-600 font-bold text-xs flex items-center justify-center shrink-0 check-badge">4</span>
+                            <span class="text-xs sm:text-sm text-slate-700 font-medium">Things you can physically <strong>feel</strong></span>
+                        </button>
+
+                        <button onclick="toggleGroundingStep(this)" class="grounding-item w-full text-left p-3 rounded-2xl border border-slate-100 bg-cream/60 hover:bg-lavender-50/60 transition-all flex items-center gap-3 cursor-pointer">
+                            <span class="w-6 h-6 rounded-full bg-lavender-100 text-lavender-600 font-bold text-xs flex items-center justify-center shrink-0 check-badge">3</span>
+                            <span class="text-xs sm:text-sm text-slate-700 font-medium">Sounds you can <strong>hear</strong> nearby</span>
+                        </button>
+
+                        <button onclick="toggleGroundingStep(this)" class="grounding-item w-full text-left p-3 rounded-2xl border border-slate-100 bg-cream/60 hover:bg-lavender-50/60 transition-all flex items-center gap-3 cursor-pointer">
+                            <span class="w-6 h-6 rounded-full bg-lavender-100 text-lavender-600 font-bold text-xs flex items-center justify-center shrink-0 check-badge">2</span>
+                            <span class="text-xs sm:text-sm text-slate-700 font-medium">Things you can <strong>smell</strong> (or enjoy)</span>
+                        </button>
+
+                        <button onclick="toggleGroundingStep(this)" class="grounding-item w-full text-left p-3 rounded-2xl border border-slate-100 bg-cream/60 hover:bg-lavender-50/60 transition-all flex items-center gap-3 cursor-pointer">
+                            <span class="w-6 h-6 rounded-full bg-lavender-100 text-lavender-600 font-bold text-xs flex items-center justify-center shrink-0 check-badge">1</span>
+                            <span class="text-xs sm:text-sm text-slate-700 font-medium">Good thing about <strong>yourself</strong> today</span>
+                        </button>
+                    </div>
+
+                    <button onclick="resetGrounding()" class="w-full py-2.5 px-4 rounded-2xl bg-lavender-50 hover:bg-lavender-100 text-lavender-600 text-xs font-semibold transition-colors cursor-pointer">
+                        Reset Checklist
+                    </button>
+                </div>
+
+                <!-- TOOL C: Brain Dump / Worry Shredder -->
+                <div class="bg-white rounded-3xl p-6 sm:p-7 border border-sage-200/70 shadow-xs flex flex-col justify-between overflow-hidden">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="px-2.5 py-1 rounded-full bg-peach-100 text-peach-500 text-xs font-semibold">03 • Let It Go</span>
+                            <span id="shred-count" class="text-xs font-medium text-slate-400">0 worries shredded</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-semibold text-slate-900">The Worry Shredder</h3>
+                        <p class="text-xs text-slate-500 mt-1">Type a nagging thought or micro-stressor. We don’t save anything—just shred it into thin air.</p>
+                    </div>
+
+                    <div class="my-5 relative">
+                        <div id="worry-paper" class="bg-cream border border-sage-200 rounded-2xl p-4 shadow-inner transition-all">
+                            <textarea id="worry-input" rows="4" placeholder="e.g., I forgot to reply to that email from Tuesday and now it feels awkward..." class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none resize-none"></textarea>
+                            <div class="flex items-center justify-between pt-2 border-t border-dashed border-sage-200 text-[11px] text-slate-400">
+                                <span><i class="fa-solid fa-lock text-sage-500 mr-1"></i> 100% ephemeral</span>
+                                <span>Ready to release</span>
+                            </div>
+                        </div>
+                        <!-- Shredder Slot Visual -->
+                        <div class="h-2.5 bg-slate-800 rounded-full mx-3 -mt-1 relative z-10 shadow-sm"></div>
+                        <p id="shred-feedback" class="text-center text-xs font-medium text-sage-600 mt-3 h-4 opacity-0 transition-opacity">
+                            Poof! Gone into the digital void. ✨
+                        </p>
+                    </div>
+
+                    <button onclick="shredWorry()" class="w-full py-3 px-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-scissors"></i>
+                        <span>Shred & Let Go</span>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. MYTH VS. FACT INTERACTIVE FLASHCARD DECK -->
+        <section id="myth-busters" class="bg-sage-100/60 rounded-[2.5rem] p-6 sm:p-12 border border-sage-200/70">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-8">
+                    <span class="px-3 py-1 rounded-full bg-white text-sage-700 text-xs font-bold uppercase tracking-wider shadow-2xs">Vibe Check • Myth Busters</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-slate-900 mt-3">Mental Health: Myth vs. Fact</h2>
+                    <p class="text-sm sm:text-base text-slate-600 mt-2">
+                        Tap the card to flip it and bust common everyday misconceptions.
+                    </p>
+                </div>
+
+                <!-- Interactive Flashcard -->
+                <div class="perspective-1000 max-w-xl mx-auto">
+                    <div id="flashcard-inner" onclick="flipCard()" class="flip-card-inner relative w-full h-72 sm:h-64 cursor-pointer">
+                        
+                        <!-- Front: Myth -->
+                        <div class="flip-card-front absolute inset-0 bg-white rounded-3xl p-7 sm:p-9 shadow-sm border border-sage-200 flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="px-3 py-1 rounded-full bg-peach-100 text-peach-500 text-xs font-bold uppercase tracking-wider">
+                                    Common Myth
+                                </span>
+                                <span id="card-counter" class="text-xs font-bold text-slate-400">1 / 4</span>
+                            </div>
+                            <p id="myth-text" class="font-serif text-xl sm:text-2xl font-medium text-slate-900 leading-snug">
+                                “Self-care means bubble baths, pricey smoothies, and ignoring your responsibilities.”
+                            </p>
+                            <div class="flex items-center justify-between text-xs font-semibold text-sage-600">
+                                <span>Tap card to reveal the reality</span>
+                                <i class="fa-solid fa-rotate"></i>
+                            </div>
+                        </div>
+
+                        <!-- Back: Fact -->
+                        <div class="flip-card-back absolute inset-0 bg-slate-900 text-white rounded-3xl p-7 sm:p-9 shadow-md flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="px-3 py-1 rounded-full bg-sage-500/30 text-sage-200 text-xs font-bold uppercase tracking-wider">
+                                    The Actual Fact
+                                </span>
+                                <span class="text-xs text-slate-400">✨ Reality Check</span>
+                            </div>
+                            <p id="fact-text" class="text-sm sm:text-base text-slate-100 leading-relaxed">
+                                Real self-care is often pretty unglamorous—like drinking a glass of water, setting a gentle boundary, going to bed 30 minutes earlier, or asking a friend for help.
+                            </p>
+                            <div class="flex items-center justify-between text-xs font-semibold text-sage-200">
+                                <span>Tap to flip back</span>
+                                <i class="fa-solid fa-check-circle"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Deck Controls -->
+                <div class="flex items-center justify-center gap-4 mt-6">
+                    <button onclick="prevCard()" class="w-11 h-11 rounded-full bg-white hover:bg-sage-50 text-slate-700 border border-sage-200 flex items-center justify-center shadow-2xs transition-all cursor-pointer" aria-label="Previous card">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <button onclick="flipCard()" class="px-5 py-2.5 rounded-full bg-white hover:bg-sage-50 text-slate-800 text-xs font-bold border border-sage-200 shadow-2xs transition-all cursor-pointer">
+                        Flip Card
+                    </button>
+                    <button onclick="nextCard()" class="w-11 h-11 rounded-full bg-white hover:bg-sage-50 text-slate-700 border border-sage-200 flex items-center justify-center shadow-2xs transition-all cursor-pointer" aria-label="Next card">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. HELPFUL RESOURCES & SUPPORT DIRECTORY -->
+        <section id="support-directory" class="space-y-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-lavender-600">Ghana & Global Support</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-slate-900 mt-1">Helpful Resources & Directory</h2>
+                </div>
+                <div class="bg-amber-50 border border-amber-200/80 rounded-2xl px-4 py-2.5 text-xs text-amber-900 max-w-md">
+                    <strong>Awareness Note:</strong> .ME. is an interactive educational awareness space and not a substitute for professional medical or clinical care. Free human support is always within reach below.
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Resource Card 1: Mental Health Authority Ghana -->
+                <div class="bg-white rounded-3xl p-6 border border-sage-200/70 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="w-11 h-11 rounded-2xl bg-sage-100 text-sage-700 flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-phone-volume text-lg"></i>
+                        </div>
+                        <h3 class="font-serif text-lg font-semibold text-slate-900">Mental Health Authority Ghana</h3>
+                        <p class="text-xs font-semibold text-sage-600 mt-1">Ghana Toll-Free • Free & Confidential</p>
+                        <p class="text-sm text-slate-600 mt-3 leading-relaxed">
+                            Call the national toll-free helpline at <strong>0800 678 678</strong> to speak confidentially with trained mental health support personnel anywhere in Ghana.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-800">Toll-Free: 0800 678 678</span>
+                        <a href="tel:0800678678" class="text-xs font-bold text-sage-600 hover:text-sage-700 flex items-center gap-1">
+                            Call Now <i class="fa-solid fa-phone text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Resource Card 2: Lifeline Ghana -->
+                <div class="bg-white rounded-3xl p-6 border border-sage-200/70 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="w-11 h-11 rounded-2xl bg-lavender-100 text-lavender-600 flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-heart-pulse text-lg"></i>
+                        </div>
+                        <h3 class="font-serif text-lg font-semibold text-slate-900">Lifeline Ghana Support</h3>
+                        <p class="text-xs font-semibold text-lavender-600 mt-1">Ghana • Crisis & Emotional Listening</p>
+                        <p class="text-sm text-slate-600 mt-3 leading-relaxed">
+                            Going through emotional distress or feeling overwhelmed? Reach out to compassionate crisis listeners at <strong>0244 846 701</strong> or <strong>0509 823 704</strong>.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-800">0244 846 701</span>
+                        <a href="tel:+233244846701" class="text-xs font-bold text-lavender-600 hover:text-lavender-500 flex items-center gap-1">
+                            Connect <i class="fa-solid fa-phone text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Resource Card 3: Campus & Community Wellness -->
+                <div class="bg-white rounded-3xl p-6 border border-sage-200/70 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="w-11 h-11 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-people-group text-lg"></i>
+                        </div>
+                        <h3 class="font-serif text-lg font-semibold text-slate-900">Campus & Community Care</h3>
+                        <p class="text-xs font-semibold text-amber-700 mt-1">Local & Peer Support</p>
+                        <p class="text-sm text-slate-600 mt-3 leading-relaxed">
+                            Students and community members can visit their university counseling center, local clinic wellness desk, or start a conversation with a trusted friend or mentor.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-800">You’re Never Alone</span>
+                        <a href="#mood-checkin" class="text-xs font-bold text-amber-700 hover:opacity-80 flex items-center gap-1">
+                            Check In <i class="fa-solid fa-arrow-up text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Resource Card 4: Find A Helpline (Global) -->
+                <div class="bg-white rounded-3xl p-6 border border-sage-200/70 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="w-11 h-11 rounded-2xl bg-peach-100 text-peach-500 flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-globe text-lg"></i>
+                        </div>
+                        <h3 class="font-serif text-lg font-semibold text-slate-900">Find A Helpline (Global)</h3>
+                        <p class="text-xs font-semibold text-peach-500 mt-1">130+ Countries • Free & Anonymous</p>
+                        <p class="text-sm text-slate-600 mt-3 leading-relaxed">
+                            Visiting from outside Ghana? Browse verified, local, free emotional support helplines and chat services anywhere in the world.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-800">International Directory</span>
+                        <a href="https://findahelpline.com" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-peach-500 hover:opacity-80 flex items-center gap-1">
+                            Find Local Help <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-sage-200/70 bg-white mt-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-amber-300 text-slate-900 font-extrabold text-[9px]">.ME.</span>
+                <span class="font-serif font-semibold text-slate-800 text-sm">.ME. — VibeCheck</span>
+                <span>• Mental Wellness Awareness Platform</span>
+            </div>
+            <p class="text-center sm:text-right">
+                Built for educational & awareness purposes. Not a substitute for professional medical advice.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Logic -->
+    <script>
+        // --- OPTIONAL GENTLE SOUND CHIMES (Tone.js) ---
+        let soundEnabled = false;
+        let synth = null;
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('sound-icon');
+            const label = document.getElementById('sound-label');
+
+            if (soundEnabled) {
+                if (!synth && typeof Tone !== 'undefined') {
+                    Tone.start();
+                    synth = new Tone.PolySynth(Tone.Synth, {
+                        oscillator: { type: "sine" },
+                        envelope: { attack: 0.08, decay: 0.3, sustain: 0.1, release: 1.2 },
+                        volume: -16
+                    }).toDestination();
+                }
+                icon.className = 'fa-solid fa-volume-high';
+                label.textContent = 'Chimes On';
+                playChime('C5');
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark';
+                label.textContent = 'Chimes Off';
+            }
+        }
+
+        function playChime(note = 'E5') {
+            if (soundEnabled && synth) {
+                try {
+                    synth.triggerAttackRelease(note, "8n");
+                } catch (e) {
+                    // Fail silently if audio context blocked
+                }
+            }
+        }
+
+        // --- 1. MOOD CHECK-IN DATA & INTERACTION ---
+        const moodData = {
+            chill: {
+                badge: '🌿 Chill Vibe',
+                badgeClass: 'bg-sage-200 text-sage-700',
+                title: 'Protect that peaceful momentum!',
+                tip: 'You’re in a great headspace right now. Enjoy the calm without feeling pressured to optimize every single second of it.',
+                action: 'Step outside for 2 minutes of fresh air',
+                music: 'Acoustic Morning & Warm Vinyl',
+                note: 'G5'
+            },
+            stressed: {
+                badge: '😬 Stressed Vibe',
+                badgeClass: 'bg-peach-100 text-peach-500',
+                title: 'Too many browser tabs open in your brain?',
+                tip: 'When everything feels urgent, nothing actually is. Pick just ONE tiny thing to finish, and give yourself permission to pause the rest for 10 minutes.',
+                action: 'Unclench your jaw & drink a glass of water',
+                music: 'Soft Piano & Distant Raindrops',
+                note: 'E5'
+            },
+            overwhelmed: {
+                badge: '🌀 Overwhelmed Vibe',
+                badgeClass: 'bg-lavender-100 text-lavender-600',
+                title: 'Hit pause—your brain is just buffering.',
+                tip: 'You don’t have to solve the whole week in the next five minutes. Shrink your focus down to just the very next small step.',
+                action: 'Try the 60s Breathing Bubble below',
+                music: 'Ambient Space Pads (60 BPM)',
+                note: 'D5'
+            },
+            energized: {
+                badge: '⚡ Energized Vibe',
+                badgeClass: 'bg-amber-100 text-amber-700',
+                title: 'Love that spark! Channel it somewhere fun.',
+                tip: 'Ride this wave! Tackle that one task you’ve been putting off, or send a quick voice note to hype up a friend.',
+                action: 'Knock out one 5-minute quick win',
+                music: 'Upbeat Indie & Sunny Bossa Nova',
+                note: 'A5'
+            },
+            low: {
+                badge: '☁️ Low Battery Vibe',
+                badgeClass: 'bg-sky-100 text-sky-700',
+                title: 'Low-power mode is totally valid today.',
+                tip: 'Phones need charging, and humans do too. Treat yourself with the same kindness you’d offer a tired friend—zero guilt required.',
+                action: 'Put on cozy socks & lower screen brightness',
+                music: 'Warm Cello & Cozy Fireplace',
+                note: 'C5'
+            }
+        };
+
+        function selectMood(moodKey) {
+            const data = moodData[moodKey];
+            if (!data) return;
+
+            playChime(data.note);
+
+            // Highlight active button
+            document.querySelectorAll('.mood-btn').forEach(btn => {
+                if (btn.dataset.mood === moodKey) {
+                    btn.classList.add('ring-2', 'ring-slate-900', 'scale-[1.03]', 'bg-white');
+                } else {
+                    btn.classList.remove('ring-2', 'ring-slate-900', 'scale-[1.03]', 'bg-white');
+                }
+            });
+
+            // Update panel content smoothly
+            const badge = document.getElementById('result-badge');
+            badge.textContent = data.badge;
+            badge.className = `px-3 py-1 rounded-full text-xs font-bold ${data.badgeClass}`;
+
+            document.getElementById('result-title').textContent = data.title;
+            document.getElementById('result-tip').textContent = data.tip;
+            document.getElementById('result-action').textContent = data.action;
+            document.getElementById('result-music').innerHTML = `<i class="fa-solid fa-headphones"></i> <span>${data.music}</span>`;
+        }
+
+        // --- 2A. 60-SECOND BREATHING BUBBLE ---
+        let breathInterval = null;
+        let breathPhaseInterval = null;
+        let isBreathing = false;
+        let secondsLeft = 60;
+
+        function toggleBreathing() {
+            if (isBreathing) {
+                stopBreathing();
+            } else {
+                startBreathing();
+            }
+        }
+
+        function startBreathing() {
+            isBreathing = true;
+            secondsLeft = 60;
+            const btn = document.getElementById('breath-btn');
+            const btnText = document.getElementById('breath-btn-text');
+            const btnIcon = document.getElementById('breath-btn-icon');
+            const circle = document.getElementById('breathing-circle');
+            const instruction = document.getElementById('breath-instruction');
+            const timerDisplay = document.getElementById('breath-timer');
+
+            btnText.textContent = 'Stop Exercise';
+            btnIcon.className = 'fa-solid fa-stop';
+            btn.classList.replace('bg-sage-600', 'bg-slate-800');
+            btn.classList.replace('hover:bg-sage-700', 'hover:bg-slate-700');
+
+            let phase = 0; // 0: Inhale (4s), 1: Hold (4s), 2: Exhale (4s)
+
+            function runPhase() {
+                if (!isBreathing) return;
+                if (phase === 0) {
+                    instruction.textContent = 'Inhale...';
+                    circle.style.transform = 'scale(1.85)';
+                    playChime('C5');
+                } else if (phase === 1) {
+                    instruction.textContent = 'Hold';
+                    circle.style.transform = 'scale(1.85)';
+                    playChime('E5');
+                } else {
+                    instruction.textContent = 'Exhale...';
+                    circle.style.transform = 'scale(1)';
+                    playChime('G4');
+                }
+                phase = (phase + 1) % 3;
+            }
+
+            runPhase();
+            breathPhaseInterval = setInterval(runPhase, 4000);
+
+            breathInterval = setInterval(() => {
+                secondsLeft--;
+                const mins = String(Math.floor(secondsLeft / 60)).padStart(2, '0');
+                const secs = String(secondsLeft % 60).padStart(2, '0');
+                timerDisplay.textContent = `${mins}:${secs}`;
+
+                if (secondsLeft <= 0) {
+                    stopBreathing(true);
+                }
+            }, 1000);
+        }
+
+        function stopBreathing(completed = false) {
+            isBreathing = false;
+            clearInterval(breathInterval);
+            clearInterval(breathPhaseInterval);
+
+            const btn = document.getElementById('breath-btn');
+            const btnText = document.getElementById('breath-btn-text');
+            const btnIcon = document.getElementById('breath-btn-icon');
+            const circle = document.getElementById('breathing-circle');
+            const instruction = document.getElementById('breath-instruction');
+            const timerDisplay = document.getElementById('breath-timer');
+
+            circle.style.transform = 'scale(1)';
+            instruction.textContent = completed ? 'Nice job! ✨' : 'Ready?';
+            timerDisplay.textContent = '01:00';
+            btnText.textContent = 'Start 60s Reset';
+            btnIcon.className = 'fa-solid fa-play';
+            btn.classList.replace('bg-slate-800', 'bg-sage-600');
+            btn.classList.replace('hover:bg-slate-700', 'hover:bg-sage-700');
+
+            if (completed) playChime('C6');
+        }
+
+        // --- 2B. 5-4-3-2-1 GROUNDING CHECKLIST ---
+        function toggleGroundingStep(button) {
+            const isDone = button.classList.toggle('done');
+            const badge = button.querySelector('.check-badge');
+
+            if (isDone) {
+                button.classList.remove('bg-cream/60', 'border-slate-100');
+                button.classList.add('bg-sage-100/80', 'border-sage-300', 'opacity-75');
+                badge.innerHTML = '<i class="fa-solid fa-check"></i>';
+                badge.classList.replace('bg-lavender-100', 'bg-sage-600');
+                badge.classList.replace('text-lavender-600', 'text-white');
+                playChime('E5');
+            } else {
+                const index = Array.from(button.parentNode.children).indexOf(button);
+                const numbers = ['5', '4', '3', '2', '1'];
+                button.classList.add('bg-cream/60', 'border-slate-100');
+                button.classList.remove('bg-sage-100/80', 'border-sage-300', 'opacity-75');
+                badge.textContent = numbers[index];
+                badge.classList.replace('bg-sage-600', 'bg-lavender-100');
+                badge.classList.replace('text-white', 'text-lavender-600');
+            }
+
+            const totalDone = document.querySelectorAll('.grounding-item.done').length;
+            document.getElementById('grounding-progress').textContent = `${totalDone} / 5 Done`;
+        }
+
+        function resetGrounding() {
+            const numbers = ['5', '4', '3', '2', '1'];
+            document.querySelectorAll('.grounding-item').forEach((btn, idx) => {
+                btn.classList.remove('done', 'bg-sage-100/80', 'border-sage-300', 'opacity-75');
+                btn.classList.add('bg-cream/60', 'border-slate-100');
+                const badge = btn.querySelector('.check-badge');
+                badge.textContent = numbers[idx];
+                badge.classList.remove('bg-sage-600', 'text-white');
+                badge.classList.add('bg-lavender-100', 'text-lavender-600');
+            });
+            document.getElementById('grounding-progress').textContent = '0 / 5 Done';
+        }
+
+        // --- 2C. WORRY SHREDDER ---
+        let shreddedCount = 0;
+
+        function shredWorry() {
+            const input = document.getElementById('worry-input');
+            const paper = document.getElementById('worry-paper');
+            const feedback = document.getElementById('shred-feedback');
+
+            if (!input.value.trim()) {
+                input.placeholder = "Type even a tiny annoyance first, then shred it...";
+                input.focus();
+                return;
+            }
+
+            playChime('G4');
+            paper.classList.add('shredding');
+
+            setTimeout(() => {
+                input.value = '';
+                paper.classList.remove('shredding');
+                shreddedCount++;
+                document.getElementById('shred-count').textContent = `${shreddedCount} ${shreddedCount === 1 ? 'worry' : 'worries'} shredded`;
+
+                feedback.classList.remove('opacity-0');
+                setTimeout(() => {
+                    feedback.classList.add('opacity-0');
+                }, 2600);
+            }, 1300);
+        }
+
+        // --- 3. MYTH VS. FACT FLASHCARD DECK ---
+        const mythCards = [
+            {
+                myth: '“Self-care means bubble baths, pricey smoothies, and ignoring your responsibilities.”',
+                fact: 'Real self-care is often pretty unglamorous—like drinking a glass of water, setting a gentle boundary, going to bed 30 minutes earlier, or asking a friend for help.'
+            },
+            {
+                myth: '“You should only talk to a counselor or therapist when things hit rock bottom.”',
+                fact: 'Think of mental health support like a regular tune-up, not just emergency roadside assistance. Talking things through early builds awesome everyday resilience.'
+            },
+            {
+                myth: '“If someone looks happy and productive on social media, they must be doing totally fine.”',
+                fact: 'People can be high-achieving, funny, and social while still carrying quiet stress inside. Checking in on your “strong” friends always means a lot.'
+            },
+            {
+                myth: '“Rest has to be ‘earned’ after you finish every single item on your to-do list.”',
+                fact: 'Rest is a basic human baseline, not a reward sticker! Your brain actually solves problems better after genuine downtime.'
+            }
+        ];
+
+        let currentCardIndex = 0;
+        let isFlipped = false;
+
+        function renderCard() {
+            const inner = document.getElementById('flashcard-inner');
+            isFlipped = false;
+            inner.classList.remove('is-flipped');
+
+            setTimeout(() => {
+                document.getElementById('myth-text').textContent = mythCards[currentCardIndex].myth;
+                document.getElementById('fact-text').textContent = mythCards[currentCardIndex].fact;
+                document.getElementById('card-counter').textContent = `${currentCardIndex + 1} / ${mythCards.length}`;
+            }, 150);
+        }
+
+        function flipCard() {
+            const inner = document.getElementById('flashcard-inner');
+            isFlipped = !isFlipped;
+            inner.classList.toggle('is-flipped', isFlipped);
+            playChime(isFlipped ? 'G5' : 'E5');
+        }
+
+        function nextCard() {
+            currentCardIndex = (currentCardIndex + 1) % mythCards.length;
+            renderCard();
+            playChime('C5');
+        }
+
+        function prevCard() {
+            currentCardIndex = (currentCardIndex - 1 + mythCards.length) % mythCards.length;
+            renderCard();
+            playChime('C5');
+        }
+
+        // --- 4. FULL-SCREEN STICKMAN PARTY & ".ME." INTRO CINEMATIC ---
+        const introOverlay = document.getElementById('intro-overlay');
+        const introCanvas = document.getElementById('intro-canvas');
+        const introCtx = introCanvas ? introCanvas.getContext('2d') : null;
+
+        let introAnimId = null;
+        let introStartTime = null;
+        let introActive = true;
+        let introCuePlayed = { act2: false, act3: false, bloom: false };
+        const INTRO_DURATION = 12.2; // seconds
+
+        // Ambient isolation particles for Act 1 & 2
+        const lonelinessParticles = Array.from({ length: 38 }, (_, i) => ({
+            x: (i * 97) % 100,
+            y: (i * 53) % 100,
+            r: 1.5 + (i % 3),
+            speedY: 0.12 + (i % 5) * 0.04,
+            drift: (i % 2 === 0 ? 1 : -1) * 0.15
+        }));
+
+        function resizeIntroCanvas() {
+            if (!introCanvas) return;
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            introCanvas.width = window.innerWidth * dpr;
+            introCanvas.height = window.innerHeight * dpr;
+            if (introCtx) {
+                introCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+        }
+
+        window.addEventListener('resize', resizeIntroCanvas);
+
+        function enableIntroAudio() {
+            if (!soundEnabled) {
+                toggleSound();
+            } else {
+                playChime('E5');
+            }
+            const icon = document.getElementById('intro-audio-icon');
+            const label = document.getElementById('intro-audio-label');
+            if (icon) icon.className = 'fa-solid fa-volume-high';
+            if (label) label.textContent = 'Story Chimes On';
+        }
+
+        function lerp(a, b, t) {
+            return a + (b - a) * Math.max(0, Math.min(1, t));
+        }
+
+        function lerpColor(c1, c2, t) {
+            const clamped = Math.max(0, Math.min(1, t));
+            const r = Math.round(c1[0] + (c2[0] - c1[0]) * clamped);
+            const g = Math.round(c1[1] + (c2[1] - c1[1]) * clamped);
+            const b = Math.round(c1[2] + (c2[2] - c1[2]) * clamped);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        function drawScribbleCloud(ctx, x, y, alpha, time) {
+            if (alpha <= 0.01) return;
+            ctx.save();
+            ctx.globalAlpha = alpha;
+            ctx.translate(x, y + Math.sin(time * 3) * 3);
+
+            // Dark moody cloud puffs
+            ctx.fillStyle = '#334155';
+            ctx.strokeStyle = '#0F172A';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.arc(-14, 2, 11, 0, Math.PI * 2);
+            ctx.arc(0, -4, 14, 0, Math.PI * 2);
+            ctx.arc(15, 2, 11, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Tangled stress scribble inside cloud
+            ctx.strokeStyle = '#94A3B8';
+            ctx.lineWidth = 1.6;
+            ctx.beginPath();
+            for (let a = 0; a < Math.PI * 4; a += 0.35) {
+                const rx = Math.cos(a * 1.7 + time * 4) * 11;
+                const ry = Math.sin(a * 2.3) * 5;
+                if (a === 0) ctx.moveTo(rx, ry);
+                else ctx.lineTo(rx, ry);
+            }
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function drawStickmanPartyCharacter(ctx, x, y, opts) {
+            const { slump, walkCycle, lookUp, smile, scale = 1 } = opts;
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.scale(scale, scale);
+
+            // Ground contact shadow
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.25)';
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 26, 7, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Stickman Party bold rounded style
+            const limbColor = '#1E293B';
+            const bodyFill = '#FF6B6B'; // Iconic playful Stickman Party coral-red
+            const strokeMain = '#0F172A';
+
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            // Walking leg angles (slow down as slump increases)
+            const stride = Math.sin(walkCycle) * (0.48 * (1 - slump * 0.55));
+            const hipY = -44 + slump * 5;
+
+            // Back Leg
+            ctx.strokeStyle = strokeMain;
+            ctx.lineWidth = 8.5;
+            ctx.beginPath();
+            ctx.moveTo(-3, hipY);
+            const backKneeX = -Math.sin(stride) * 14;
+            const backKneeY = hipY + 21;
+            const backFootX = -Math.sin(stride) * 22;
+            const backFootY = -3 - Math.max(0, -Math.cos(walkCycle)) * 4 * (1 - slump * 0.5);
+            ctx.lineTo(backKneeX, backKneeY);
+            ctx.lineTo(backFootX, backFootY);
+            ctx.stroke();
+
+            // Front Leg
+            ctx.beginPath();
+            ctx.moveTo(3, hipY);
+            const frontKneeX = Math.sin(stride) * 14;
+            const frontKneeY = hipY + 21;
+            const frontFootX = Math.sin(stride) * 22;
+            const frontFootY = -3 - Math.max(0, Math.cos(walkCycle)) * 4 * (1 - slump * 0.5);
+            ctx.lineTo(frontKneeX, frontKneeY);
+            ctx.lineTo(frontFootX, frontFootY);
+            ctx.stroke();
+
+            // Torso (slumps forward when stressed, straightens when .ME. arrives)
+            const torsoLean = slump * 0.36 - lookUp * 0.12;
+            ctx.save();
+            ctx.translate(0, hipY);
+            ctx.rotate(torsoLean);
+
+            // Back Arm (drooping low when heavy)
+            ctx.strokeStyle = strokeMain;
+            ctx.lineWidth = 7.5;
+            ctx.beginPath();
+            ctx.moveTo(0, -30);
+            const armSwing = Math.sin(walkCycle) * 0.25 * (1 - slump);
+            ctx.quadraticCurveTo(8 + slump * 8, -14, 5 + slump * 12 - armSwing * 14, -2 + slump * 6);
+            ctx.stroke();
+
+            // Rounded Stickman Party Capsule Torso
+            ctx.fillStyle = bodyFill;
+            ctx.strokeStyle = strokeMain;
+            ctx.lineWidth = 4.5;
+            ctx.beginPath();
+            ctx.roundRect(-12, -38, 24, 40, 12);
+            ctx.fill();
+            ctx.stroke();
+
+            // Head (tilts down with slump, tilts up toward .ME. in Act 3)
+            const headTilt = slump * 0.42 - lookUp * 0.32;
+            ctx.save();
+            ctx.translate(slump * 4, -56 + slump * 4);
+            ctx.rotate(headTilt);
+
+            // Round cartoon head
+            ctx.fillStyle = bodyFill;
+            ctx.strokeStyle = strokeMain;
+            ctx.lineWidth = 4.5;
+            ctx.beginPath();
+            ctx.arc(0, 0, 21, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Expressive Stickman Party Large Cartoon Eyes (facing right)
+            const eyeOffsetX = 6;
+            const eyeOffsetY = lookUp * -3 + slump * 2;
+
+            // Left Eye
+            ctx.fillStyle = '#FFFFFF';
+            ctx.strokeStyle = strokeMain;
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.ellipse(eyeOffsetX - 4, eyeOffsetY - 2, 5.5, 7, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Right Eye
+            ctx.beginPath();
+            ctx.ellipse(eyeOffsetX + 6, eyeOffsetY - 2, 5.5, 7, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Pupils
+            ctx.fillStyle = '#0F172A';
+            const pupilShiftY = lookUp * -2 + slump * 2.5;
+            ctx.beginPath();
+            ctx.arc(eyeOffsetX - 2.5, eyeOffsetY - 1.5 + pupilShiftY, 2.4, 0, Math.PI * 2);
+            ctx.arc(eyeOffsetX + 7.5, eyeOffsetY - 1.5 + pupilShiftY, 2.4, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Expressive Eyebrows (worried tilt when slumped, lifted/hopeful when looking up)
+            ctx.strokeStyle = strokeMain;
+            ctx.lineWidth = 2.6;
+            ctx.beginPath();
+            if (slump > 0.35 && lookUp < 0.4) {
+                // Sad / worried brows
+                ctx.moveTo(eyeOffsetX - 9, eyeOffsetY - 11);
+                ctx.lineTo(eyeOffsetX - 1, eyeOffsetY - 8.5);
+                ctx.moveTo(eyeOffsetX + 3, eyeOffsetY - 8.5);
+                ctx.lineTo(eyeOffsetX + 11, eyeOffsetY - 11);
+            } else {
+                // Hopeful / curious brows
+                ctx.moveTo(eyeOffsetX - 9, eyeOffsetY - 11 - lookUp * 2);
+                ctx.lineTo(eyeOffsetX - 1, eyeOffsetY - 12 - lookUp * 2);
+                ctx.moveTo(eyeOffsetX + 3, eyeOffsetY - 12 - lookUp * 2);
+                ctx.lineTo(eyeOffsetX + 11, eyeOffsetY - 11 - lookUp * 2);
+            }
+            ctx.stroke();
+
+            // Mouth expression (frown -> soft smile)
+            ctx.beginPath();
+            if (smile > 0.4) {
+                ctx.arc(eyeOffsetX + 2, eyeOffsetY + 8, 5, 0.15 * Math.PI, 0.85 * Math.PI);
+            } else if (slump > 0.3) {
+                ctx.arc(eyeOffsetX + 2, eyeOffsetY + 13, 4.5, 1.15 * Math.PI, 1.85 * Math.PI);
+            } else {
+                ctx.moveTo(eyeOffsetX - 2, eyeOffsetY + 10);
+                ctx.lineTo(eyeOffsetX + 6, eyeOffsetY + 10);
+            }
+            ctx.stroke();
+
+            ctx.restore(); // End head
+
+            // Front Arm (hanging heavily during slump)
+            ctx.strokeStyle = strokeMain;
+            ctx.lineWidth = 7.5;
+            ctx.beginPath();
+            ctx.moveTo(-2, -28);
+            ctx.quadraticCurveTo(-4 + slump * 10, -12, 2 + slump * 14 + armSwing * 14, 0 + slump * 6);
+            ctx.stroke();
+
+            ctx.restore(); // End torso
+            ctx.restore(); // End character
+        }
+
+        function drawMeOrbAndSpeech(ctx, orbX, orbY, alpha, pulseTime, speechProgress) {
+            if (alpha <= 0.01) return;
+            ctx.save();
+            ctx.globalAlpha = alpha;
+
+            const pulse = Math.sin(pulseTime * 3.5) * 6;
+
+            // Outer ambient golden halo
+            const outerGrad = ctx.createRadialGradient(orbX, orbY, 10, orbX, orbY, 150 + pulse * 2);
+            outerGrad.addColorStop(0, 'rgba(255, 251, 235, 0.95)');
+            outerGrad.addColorStop(0.3, 'rgba(253, 224, 71, 0.45)');
+            outerGrad.addColorStop(0.65, 'rgba(196, 181, 253, 0.18)');
+            outerGrad.addColorStop(1, 'rgba(253, 224, 71, 0)');
+
+            ctx.fillStyle = outerGrad;
+            ctx.beginPath();
+            ctx.arc(orbX, orbY, 150 + pulse * 2, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Concentric gentle rings
+            ctx.strokeStyle = 'rgba(254, 240, 138, 0.35)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(orbX, orbY, 54 + pulse, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Radiant Core Orb
+            const coreGrad = ctx.createRadialGradient(orbX - 6, orbY - 6, 4, orbX, orbY, 36);
+            coreGrad.addColorStop(0, '#FFFFFF');
+            coreGrad.addColorStop(0.7, '#FEF08A');
+            coreGrad.addColorStop(1, '#F59E0B');
+
+            ctx.fillStyle = coreGrad;
+            ctx.shadowColor = '#FDE047';
+            ctx.shadowBlur = 28;
+            ctx.beginPath();
+            ctx.arc(orbX, orbY, 34 + pulse * 0.3, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // ".ME." Glowing Typography inside/on the orb
+            ctx.fillStyle = '#1E293B';
+            ctx.font = '700 18px "Plus Jakarta Sans", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('.ME.', orbX, orbY + 1);
+
+            // Friendly Speech Bubble in Act 3
+            if (speechProgress > 0.02) {
+                ctx.save();
+                const bubbleScale = Math.min(1, speechProgress * 1.25);
+                const bubbleW = Math.min(310, window.innerWidth * 0.78);
+                const bubbleH = 68;
+                const bx = orbX - bubbleW * 0.55;
+                const by = orbY - 115;
+
+                ctx.globalAlpha = alpha * Math.min(1, speechProgress * 1.5);
+                ctx.translate(orbX, orbY - 48);
+                ctx.scale(bubbleScale, bubbleScale);
+                ctx.translate(-orbX, -(orbY - 48));
+
+                // Bubble shadow & pill
+                ctx.fillStyle = '#FFFFFF';
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.25)';
+                ctx.shadowBlur = 20;
+                ctx.beginPath();
+                ctx.roundRect(bx, by, bubbleW, bubbleH, 20);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                // Bubble pointer tail toward .ME.
+                ctx.beginPath();
+                ctx.moveTo(orbX - 10, by + bubbleH - 1);
+                ctx.lineTo(orbX, by + bubbleH + 13);
+                ctx.lineTo(orbX + 10, by + bubbleH - 1);
+                ctx.closePath();
+                ctx.fill();
+
+                // Speech text
+                ctx.fillStyle = '#0F172A';
+                ctx.font = '600 15px "Fraunces", serif';
+                ctx.textAlign = 'center';
+                ctx.fillText("I'm .ME. — and I'm here to help.", bx + bubbleW / 2, by + 27);
+
+                ctx.fillStyle = '#537365';
+                ctx.font = '600 11.5px "Plus Jakarta Sans", sans-serif';
+                ctx.fillText("You don't have to carry it alone.", bx + bubbleW / 2, by + 48);
+
+                ctx.restore();
+            }
+
+            ctx.restore();
+        }
+
+        function renderIntroFrame(timestamp) {
+            if (!introActive || !introCtx) return;
+            if (!introStartTime) introStartTime = timestamp;
+
+            const elapsed = (timestamp - introStartTime) / 1000;
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            const groundY = h * 0.72;
+
+            // Update progress bar
+            const progressPct = Math.min(100, (elapsed / INTRO_DURATION) * 100);
+            const bar = document.getElementById('intro-progress-bar');
+            if (bar) bar.style.width = `${progressPct}%`;
+
+            // Narrative Act Progress Calculations
+            // Act 1 (0 -> 4.5s): Heavy walk & darkening world
+            const act1T = Math.min(1, elapsed / 4.5);
+            // Act 2 (4.5 -> 8.2s): .ME. light arrives in darkness
+            const act2T = Math.max(0, Math.min(1, (elapsed - 4.5) / 3.5));
+            // Act 3 (8.0 -> 11.2s): Speech bubble & hope
+            const act3T = Math.max(0, Math.min(1, (elapsed - 8.0) / 2.2));
+            // Finale Bloom (10.6 -> 12.2s): Warm golden-cream expansion into webpage
+            const bloomT = Math.max(0, Math.min(1, (elapsed - 10.6) / 1.5));
+
+            // Audio Cues (if user enabled sound)
+            if (elapsed >= 4.6 && !introCuePlayed.act2) {
+                introCuePlayed.act2 = true;
+                playChime('E5');
+            }
+            if (elapsed >= 8.1 && !introCuePlayed.act3) {
+                introCuePlayed.act3 = true;
+                playChime('G5');
+            }
+            if (elapsed >= 10.7 && !introCuePlayed.bloom) {
+                introCuePlayed.bloom = true;
+                playChime('C6');
+            }
+
+            // Update bottom subtitle caption smoothly
+            const captionPill = document.getElementById('intro-caption-pill');
+            if (captionPill) {
+                if (elapsed < 4.5) {
+                    captionPill.textContent = "Sometimes, carrying everything alone makes the world feel heavy and dark...";
+                } else if (elapsed < 8.0) {
+                    captionPill.textContent = "Even in the quietest, darkest moments, a gentle light can find you.";
+                } else {
+                    captionPill.textContent = "Meet .ME. — your pocket space to pause, breathe, and feel supported.";
+                }
+            }
+
+            // 1. SKY / ENVIRONMENT BACKGROUND (Warm Pastel -> Lonely Midnight Charcoal -> Warm Dawn)
+            const pastelTop = [250, 248, 245];
+            const pastelBot = [225, 236, 228];
+            const darkTop = [15, 20, 34];
+            const darkBot = [28, 35, 54];
+            const warmReturnTop = [254, 249, 235];
+            const warmReturnBot = [250, 248, 245];
+
+            let topCol = lerpColor(pastelTop, darkTop, Math.min(1, act1T * 1.25));
+            let botCol = lerpColor(pastelBot, darkBot, Math.min(1, act1T * 1.25));
+
+            if (act3T > 0) {
+                // Soften darkness slightly as .ME. speaks
+                topCol = lerpColor([15, 20, 34], [38, 45, 72], act3T * 0.6);
+                botCol = lerpColor([28, 35, 54], [65, 68, 96], act3T * 0.6);
+            }
+
+            const bgGrad = introCtx.createLinearGradient(0, 0, 0, h);
+            bgGrad.addColorStop(0, topCol);
+            bgGrad.addColorStop(1, botCol);
+            introCtx.fillStyle = bgGrad;
+            introCtx.fillRect(0, 0, w, h);
+
+            // Subtle drifting loneliness particles in the dark
+            const particleAlpha = Math.max(0, Math.min(0.55, act1T * 0.7 - act3T * 0.35));
+            if (particleAlpha > 0.01) {
+                introCtx.fillStyle = `rgba(148, 163, 184, ${particleAlpha})`;
+                lonelinessParticles.forEach((p, idx) => {
+                    const px = ((p.x / 100) * w + Math.sin(elapsed + idx) * 18 + w) % w;
+                    const py = ((p.y / 100) * groundY - elapsed * p.speedY * 25 + groundY) % groundY;
+                    introCtx.beginPath();
+                    introCtx.arc(px, py, p.r, 0, Math.PI * 2);
+                    introCtx.fill();
+                });
+            }
+
+            // Ground Plane
+            const groundCol = lerpColor([210, 224, 214], [20, 26, 42], Math.min(1, act1T * 1.25));
+            introCtx.fillStyle = groundCol;
+            introCtx.fillRect(0, groundY, w, h - groundY);
+
+            // Subtle horizon line
+            introCtx.strokeStyle = `rgba(255, 255, 255, ${0.12 * act1T})`;
+            introCtx.lineWidth = 1.5;
+            introCtx.beginPath();
+            introCtx.moveTo(0, groundY);
+            introCtx.lineTo(w, groundY);
+            introCtx.stroke();
+
+            // 2. STICKMAN POSITION & POSTURE
+            const startX = w * 0.22;
+            const stopX = Math.min(w * 0.44, w / 2 - 45);
+            const walkProgress = Math.min(1, elapsed / 6.2);
+            // Smooth ease-out walk that slows down as he grows tired
+            const easedWalk = 1 - Math.pow(1 - walkProgress, 1.85);
+            const charX = lerp(startX, stopX, easedWalk);
+
+            // Walk cycle stops gently once .ME. arrives and he looks up
+            const isWalking = elapsed < 6.4;
+            const walkSpeed = lerp(5.2, 2.2, act1T);
+            const walkCycle = isWalking ? elapsed * walkSpeed : 0;
+
+            // Slump builds in Act 1, then lifts in Act 3
+            const slumpAmount = Math.max(0, Math.min(1, act1T * 1.15) - act3T * 0.85);
+            const lookUpAmount = act3T;
+            const smileAmount = Math.max(0, (act3T - 0.35) / 0.65);
+
+            const charScale = w < 480 ? 0.92 : 1.15;
+
+            // Draw Stickman
+            drawStickmanPartyCharacter(introCtx, charX, groundY, {
+                slump: slumpAmount,
+                walkCycle,
+                lookUp: lookUpAmount,
+                smile: smileAmount,
+                scale: charScale
+            });
+
+            // Floating stress scribble cloud above stickman (fades out when .ME. speaks)
+            const cloudAlpha = Math.max(0, Math.min(0.9, (act1T - 0.25) * 1.4) - act3T * 1.3);
+            drawScribbleCloud(introCtx, charX + slumpAmount * 12, groundY - 128 * charScale, cloudAlpha, elapsed);
+
+            // 3. ".ME." BRIGHT LIGHT ARRIVAL (Act 2 & Act 3)
+            if (act2T > 0) {
+                const orbTargetX = Math.min(w * 0.68, charX + (w < 480 ? 115 : 175));
+                const orbStartY = groundY - 230;
+                const orbTargetY = groundY - 115 * charScale;
+                const easedOrb = 1 - Math.pow(1 - act2T, 3);
+                const orbY = lerp(orbStartY, orbTargetY, easedOrb) + Math.sin(elapsed * 2.5) * 6;
+
+                // Soft beam of light connecting .ME. toward the stickman
+                if (act2T > 0.35) {
+                    const beamAlpha = Math.min(0.22, (act2T - 0.35) * 0.35);
+                    const beamGrad = introCtx.createLinearGradient(orbTargetX, orbY, charX, groundY - 40);
+                    beamGrad.addColorStop(0, `rgba(254, 240, 138, ${beamAlpha})`);
+                    beamGrad.addColorStop(1, 'rgba(254, 240, 138, 0)');
+                    introCtx.fillStyle = beamGrad;
+                    introCtx.beginPath();
+                    introCtx.moveTo(orbTargetX, orbY - 25);
+                    introCtx.lineTo(charX - 30, groundY);
+                    introCtx.lineTo(charX + 45, groundY);
+                    introCtx.lineTo(orbTargetX, orbY + 25);
+                    introCtx.closePath();
+                    introCtx.fill();
+                }
+
+                drawMeOrbAndSpeech(introCtx, orbTargetX, orbY, Math.min(1, act2T * 1.8), elapsed, act3T);
+            }
+
+            // 4. WARM LIGHT EXPANSION TRANSITION INTO WEBPAGE
+            if (bloomT > 0) {
+                const orbX = Math.min(w * 0.68, charX + (w < 480 ? 115 : 175));
+                const orbY = groundY - 115 * charScale;
+                const maxRadius = Math.hypot(w, h);
+                const radius = bloomT * bloomT * maxRadius * 1.15;
+
+                const bloomGrad = introCtx.createRadialGradient(orbX, orbY, 0, orbX, orbY, Math.max(1, radius));
+                bloomGrad.addColorStop(0, '#FAF8F5');
+                bloomGrad.addColorStop(0.75, '#FEF9C3');
+                bloomGrad.addColorStop(1, 'rgba(250, 248, 245, 0)');
+
+                introCtx.fillStyle = bloomGrad;
+                introCtx.beginPath();
+                introCtx.arc(orbX, orbY, radius, 0, Math.PI * 2);
+                introCtx.fill();
+            }
+
+            if (elapsed >= INTRO_DURATION) {
+                finishIntro(false);
+                return;
+            }
+
+            introAnimId = requestAnimationFrame(renderIntroFrame);
+        }
+
+        function finishIntro(skipped = false) {
+            if (!introActive) return;
+            introActive = false;
+            if (introAnimId) cancelAnimationFrame(introAnimId);
+
+            try {
+                sessionStorage.setItem('me_intro_seen', 'true');
+            } catch (e) {
+                // Ignore storage errors in restricted contexts
+            }
+
+            if (skipped) playChime('G5');
+
+            if (introOverlay) {
+                introOverlay.classList.add('fade-out');
+            }
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function replayIntro() {
+            introActive = true;
+            introStartTime = null;
+            introCuePlayed = { act2: false, act3: false, bloom: false };
+            resizeIntroCanvas();
+
+            if (introOverlay) {
+                introOverlay.classList.remove('fade-out');
+            }
+            document.body.classList.add('overflow-hidden');
+            window.scrollTo({ top: 0, behavior: 'instant' });
+
+            if (introAnimId) cancelAnimationFrame(introAnimId);
+            introAnimId = requestAnimationFrame(renderIntroFrame);
+        }
+
+        // Play the .ME. intro automatically on first visit in this browser session
+        window.addEventListener('DOMContentLoaded', () => {
+            let alreadySeen = false;
+            try {
+                alreadySeen = sessionStorage.getItem('me_intro_seen') === 'true';
+            } catch (e) {
+                alreadySeen = false;
+            }
+
+            if (alreadySeen) {
+                introActive = false;
+                if (introOverlay) {
+                    introOverlay.classList.add('fade-out');
+                }
+                document.body.classList.remove('overflow-hidden');
+            } else {
+                document.body.classList.add('overflow-hidden');
+                resizeIntroCanvas();
+                introAnimId = requestAnimationFrame(renderIntroFrame);
+            }
+        });
+    </script>
+</body>
+</html>
